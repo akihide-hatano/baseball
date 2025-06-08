@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Team extends Model
 {
-    use HasMany;
+    use HasFactory;
 
     protected $fillable=[
         'team_name',
