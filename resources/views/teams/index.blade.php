@@ -41,7 +41,13 @@
                             @foreach ($teams as $team)
                             <tr>
                                 <td>{{ $team->id }}</td>
-                                <td>{{ $team->team_name }}</td>
+                                {{-- ↓↓↓ この部分を修正します ↓↓↓ --}}
+                                <td>
+                                    <a href="{{ route('teams.show', $team) }}" class="text-blue-600 hover:underline">
+                                        {{ $team->team_name }}
+                                    </a>
+                                </td>
+                                {{-- ↑↑↑ ここまでを修正します ↑↑↑ --}}
                                 <td>{{ $team->league }}</td>
                                 <td>{{ $team->home_stadium }}</td>
                                 <td>{{ $team->total_championships }}</td>
