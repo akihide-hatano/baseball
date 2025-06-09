@@ -14,16 +14,12 @@ class TeamController extends Controller
     public function index(Request $request)
     {
         $selectedLeague = $request->query('league');
-
-        // ★★★ チームデータを格納する変数を $teams に統一し、初期化も行う ★★★
-        $teams = new Collection(); // nullが渡されないように初期化
-
         if ($selectedLeague) {
             // $selectedLeague がある場合、フィルタリングした結果を $teams に代入
-            $teams = Team::where('league',$selectedLeague)->get();
+            $teams = Team::where('league',$selectedLeague)->with('stadium')->get();
         } else {
             // $selectedLeague がない場合、全てのチームを取得して $teams に代入
-            $teams = Team::all();
+            $teams = Team::with('stadium')->get();
         }
         return view('teams.index', compact('teams', 'selectedLeague'));
     }
@@ -31,9 +27,11 @@ class TeamController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Team $team)
     {
-        //
+        $team->load('stadium');
+        // dd($team);
+        // return view('teams.show',compact('team'));
     }
 
     /**
@@ -49,8 +47,13 @@ class TeamController extends Controller
      */
     public function show(Team $team)
     {
-        dd($team);
-        return view('teams.show',compact('team'));
+        // ★★★ この行を追加してください ★★★
+        $team->load('stadium');
+
+        // ★★★ dd の位置を load の後に移動し、再度確認してください ★★★
+        // dd($team);
+        // dd($team->stadium->name); // 特定のスタジアム名が出力されるか確認
+        return view('teams.show', compact('team'));
     }
 
     /**
