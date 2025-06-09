@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('players', function (Blueprint $table) {
             $table->string('specialty', 255)->nullable()->after('status');
             $table->string('hometown', 255)->nullable()->after('specialty');
-            $table->json('career_stats')->nullable()->after('hometown'); 
+            $table->json('career_stats')->nullable()->after('hometown');
         });
     }
 

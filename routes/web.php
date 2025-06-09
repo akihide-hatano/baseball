@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\PlayerController;
+use App\Models\Player;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,6 +16,11 @@ Route::get('/teams',[TeamController::class,'index'])->name('teams.index'); // �
 Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show'); // これも存在することを確認
 
 Route::get('/players/{player}',[PlayerController::class,'show'])->name('players.show');
+
+Route::get('/player-stats', function () {
+    $player = Player::first();
+    return view('player-stats', compact('player'));
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
