@@ -19,6 +19,15 @@ class Player extends Model
         'height',
         'weight',
         'status',
+        'specialty',
+        'hometown',
+        'career_stats',
+        'team_id',
+    ];
+
+    protected $casts =[
+        'date_of_birth'=>'date',
+        'career_stats' => 'array',
     ];
 
     /**
