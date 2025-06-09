@@ -16,7 +16,7 @@ class Stadium extends Model
         'name',
         'location',
         'capacity',
-        'built_year',
+        'build_year',
     ];
 
     // このスタジアムを本拠地とする「単一の」チームを定義する
