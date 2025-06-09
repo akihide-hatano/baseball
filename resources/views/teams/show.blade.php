@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">{{ $team->team_name }}</h3>
 
-                    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mb-8">
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">ID:</dt>
                             <dd class="mt-1 text-sm text-gray-900">{{ $team->id }}</dd>
@@ -24,8 +24,8 @@
                             <dt class="text-sm font-medium text-gray-500">優勝回数:</dt>
                             <dd class="mt-1 text-sm text-gray-900">{{ $team->total_championships }}</dd>
                         </div>
-                        {{-- スタジアム情報ここから --}}
-                        @if ($team->stadium) {{-- スタジアム情報が存在する場合のみ表示 --}}
+                        {{-- スタジアム情報 --}}
+                        @if ($team->stadium)
                             <div class="sm:col-span-2 mt-4 border-t pt-4">
                                 <h4 class="text-md font-medium text-gray-900 mb-2">本拠地スタジアム</h4>
                             </div>
@@ -50,8 +50,31 @@
                                 <p class="text-sm text-gray-500">本拠地スタジアム情報がありません。</p>
                             </div>
                         @endif
-                        {{-- スタジアム情報ここまで --}}
                     </dl>
+
+                    {{-- 所属選手一覧ここから --}}
+                    <div class="mt-8 border-t pt-8">
+                        <h4 class="text-xl font-medium text-gray-900 mb-4">所属選手一覧</h4>
+                        {{-- $team->players がコレクションであり、空でないかを確認 --}}
+                        @if ($team->players->isNotEmpty())
+                            <ul class="divide-y divide-gray-200">
+                                @foreach ($team->players as $player)
+                                    <li class="py-3 flex justify-between items-center">
+                                        <div>
+                                            <p class="text-lg font-semibold text-gray-900">{{ $player->name }}</p>
+                                            <p class="text-sm text-gray-600">
+                                                背番号: {{ $player->jersey_number ?? 'N/A' }} |
+                                                生年月日: {{ $player->date_of_birth ? \Carbon\Carbon::parse($player->birth_date)->format('Y年m月d日') : 'N/A' }} |
+                                                **身長: {{ $player->height ?? 'N/A' }}cm** | **体重: {{ $player->weight ?? 'N/A' }}kg** | **ステータス: {{ $player->status ?? 'N/A' }}** </p>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-gray-600">このチームにはまだ選手が登録されていません。</p>
+                        @endif
+                    </div>
+                    {{-- 所属選手一覧ここまで --}}
 
                     <div class="mt-6">
                         <a href="{{ route('teams.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

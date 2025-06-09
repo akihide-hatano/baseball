@@ -15,7 +15,7 @@ class Team extends Model
         'team_name',
         'league',
         'total_championships',
-        'stadium_id', // ★ 2. ここに stadium_id があり、カンマも正しく付いているか確認！
+        'stadium_id',
     ];
 
     // Player リレーション（もしあれば）
@@ -24,15 +24,8 @@ class Team extends Model
         return $this->hasMany(Player::class);
     }
 
-    /**
-     * このチームが所属するスタジアムを取得する (1対1の関係)
-     */
     public function stadium(): BelongsTo // ★ 3. メソッド名、型ヒント BelongsTo が正しいか確認！
     {
-        // ★ 4. return $this->belongsTo(Stadium::class); が正しいか確認！
-        //      もし、外部キー名が 'stadium_id' 以外の場合は、
-        //      return $this->belongsTo(Stadium::class, '外部キー名'); のように記述
-        //      しかし、今回はデフォルトの 'stadium_id' なので、現状のままでOKのはず
         return $this->belongsTo(Stadium::class);
     }
 }

@@ -48,7 +48,7 @@ class TeamController extends Controller
     public function show(Team $team)
     {
         // ★★★ この行を追加してください ★★★
-        $team->load('stadium');
+        $team->load(['stadium','players']);
 
         // ★★★ dd の位置を load の後に移動し、再度確認してください ★★★
         // dd($team);
