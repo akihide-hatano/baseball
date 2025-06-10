@@ -39,7 +39,10 @@ class PlayerController extends Controller
     public function show(Player $player)
     {
         $player->load('team');
-        return view('players.show',compact('player'));
+        // $team変数をビューに渡す
+        $team = $player->team;
+
+        return view('players.show',compact('player','team'));
     }
 
     public function showByTeam(Team $team,Player $player){
