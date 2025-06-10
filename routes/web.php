@@ -10,12 +10,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-// パターンB: 個別に定義している場合
-Route::get('/teams',[TeamController::class,'index'])->name('teams.index'); // この行が正しく存在する
-Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show'); // これも存在することを確認
-
+//チーム一覧
+Route::get('/teams',[TeamController::class,'index'])->name('teams.index');
+//特定のチーム詳細
+Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
+//汎用的な単独選手詳細ページ
 Route::get('/players/{player}',[PlayerController::class,'show'])->name('players.show');
+//特的のチームに紐ずく選手の詳細ページ
+Route::get('/teams/{team}/players/{player}', [PlayerController::class, 'showByTeam'])->name('teams.players.show');
 
 Route::get('/player-stats', function () {
     $player = Player::first();

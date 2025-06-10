@@ -52,7 +52,6 @@
                         @endif
                     </dl>
 
-                    {{-- 所属選手一覧ここから --}}
                     <div class="mt-8 border-t pt-8">
                         <h4 class="text-xl font-medium text-gray-900 mb-4">所属選手一覧</h4>
                         {{-- $team->players がコレクションであり、空でないかを確認 --}}
@@ -61,11 +60,19 @@
                                 @foreach ($team->players as $player)
                                     <li class="py-3 flex justify-between items-center">
                                         <div>
-                                            <p class="text-lg font-semibold text-gray-900">{{ $player->name }}</p>
+                                            {{-- ここにaタグを追加 --}}
+                                            <p class="text-lg font-semibold text-gray-900">
+                                                <a href="{{ route('players.show', $player->id) }}" class="text-blue-600 hover:text-blue-800 hover:underline">
+                                                    {{ $player->name }}
+                                                </a>
+                                            </p>
                                             <p class="text-sm text-gray-600">
                                                 背番号: {{ $player->jersey_number ?? 'N/A' }} |
-                                                生年月日: {{ $player->date_of_birth ? \Carbon\Carbon::parse($player->birth_date)->format('Y年m月d日') : 'N/A' }} |
-                                                **身長: {{ $player->height ?? 'N/A' }}cm** | **体重: {{ $player->weight ?? 'N/A' }}kg** | **ステータス: {{ $player->status ?? 'N/A' }}** </p>
+                                                生年月日: {{ $player->date_of_birth ? \Carbon\Carbon::parse($player->date_of_birth)->format('Y年m月d日') : 'N/A' }} | {{-- birth_date を date_of_birth に修正 --}}
+                                                身長: {{ $player->height ?? 'N/A' }}cm |
+                                                体重: {{ $player->weight ?? 'N/A' }}kg |
+                                                ステータス: {{ $player->status ?? 'N/A' }}
+                                            </p>
                                         </div>
                                     </li>
                                 @endforeach
@@ -74,7 +81,6 @@
                             <p class="text-gray-600">このチームにはまだ選手が登録されていません。</p>
                         @endif
                     </div>
-                    {{-- 所属選手一覧ここまで --}}
 
                     <div class="mt-6">
                         <a href="{{ route('teams.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
