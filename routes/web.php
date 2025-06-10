@@ -15,6 +15,7 @@ Route::get('/teams',[TeamController::class,'index'])->name('teams.index');
 //特定のチーム詳細
 Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
 //汎用的な単独選手詳細ページ
+Route::get('/players', [PlayerController::class, 'index'])->name('players.index');
 Route::get('/players/{player}',[PlayerController::class,'show'])->name('players.show');
 //特的のチームに紐ずく選手の詳細ページ
 Route::get('/teams/{team}/players/{player}', [PlayerController::class, 'showByTeam'])->name('teams.players.show');

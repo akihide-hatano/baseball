@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Player;
+use App\Models\Team;
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller
@@ -12,7 +13,8 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        //
+        $player= Player::with('team','positions')->orderBy('name')->get();
+        return view('players.index',compact('players'));
     }
 
     /**
@@ -37,7 +39,17 @@ class PlayerController extends Controller
     public function show(Player $player)
     {
         $player->load('team');
-        return view('player.show',compact('player'));
+        return view('players.show',compact('player'));
+    }
+
+    public function showByTeam(Team $team,Player $player){
+
+        if($player->team_id !== $team->id){
+            abort(404,'選手が指定されたチームに所属していません');
+        }
+
+        $player->load('team','positions');
+        return view('teams.players.show', compact('team', 'player'));
     }
 
     /**
