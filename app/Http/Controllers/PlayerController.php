@@ -42,6 +42,8 @@ class PlayerController extends Controller
         // $team変数をビューに渡す
         $team = $player->team;
 
+         // ここにddを追加
+        // dd($player->total_stats);
         return view('players.show',compact('player','team'));
     }
 
@@ -51,6 +53,8 @@ class PlayerController extends Controller
             abort(404,'選手が指定されたチームに所属していません');
         }
 
+                // ここにもddを追加
+        dd($player->total_stats); // ★追加★
         $player->load('team','positions');
         return view('teams.players.show', compact('team', 'player'));
     }
